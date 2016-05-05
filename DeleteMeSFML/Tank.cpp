@@ -156,12 +156,14 @@ void Tank::FireCannon()
 
 	for (iter; iter != m_lBullet.end(); ++iter)
 	{
-		if ((*iter)->INFLIGHT)
+		if ((*iter)->GetBulletState() == Bullet::INFLIGHT)
 		{
-			++iter;
+			continue;
 		}
+		//if already in flight, will go back to the start
 
-		if ((*iter)->LOADED)
+
+		if ((*iter)->GetBulletState() == Bullet::LOADED)
 		{
 			(*iter)->Launch();
 		}

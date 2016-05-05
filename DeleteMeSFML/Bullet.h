@@ -28,7 +28,7 @@ public:
 
 	//States
 	enum BState { STATE_NULL, LOADED, INFLIGHT, HIT, EMPTY };
-	BState m_bulletstate;
+	BState GetBulletState();
 	void StateLoaded(sf::Vector2f position, sf::Vector2f direction);
 	void StateInFlight(float dt, sf::Vector2f position, sf::Vector2f direction);
 	void StateHit();
@@ -36,7 +36,7 @@ public:
 
 
 
-	//
+	//Member variables
 
 private:
 	sf::Vector2f m_position;
@@ -48,7 +48,7 @@ private:
 	bool m_inFlight;
 	sf::Vector2f m_bulletOrigin;
 	sf::Vector2f m_bulletDirection;
-	
+	BState m_bulletstate;
 	
 	
 	// directional enum

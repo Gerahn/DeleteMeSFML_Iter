@@ -89,8 +89,8 @@ void Bullet::Init(sf::Vector2f position, sf::Sprite* sprite)
 	//m_sprite->setPosition(m_position);
 	
 	m_position = position;
-	m_sprite->setPosition(position);
 	m_sprite = sprite;
+	m_sprite->setPosition(position);
 	m_bulletstate = LOADED;
 	m_boundingBox.setOrigin(25, 25);
 	m_boundingBox.setFillColor(sf::Color::Transparent);
@@ -124,13 +124,13 @@ void Bullet::SetBCol()
 
 void Bullet::Launch()
 {
-	if (m_inFlight == false && Bullet::LOADED)
+	if (m_inFlight == false && m_bulletstate == Bullet::LOADED)
 	{
 		m_bulletOrigin = m_position;
+		m_inFlight = true;
+		m_bulletstate = Bullet::INFLIGHT;
+		//by having everything here it won't keep calling during flight
 	}
-	
-	m_inFlight = true;
-	Bullet::INFLIGHT;
 }
 
 
@@ -169,7 +169,10 @@ void Bullet::Update(float dt, sf::Vector2f position, sf::Vector2f direction)
 
 }	
 
-
+Bullet::BState Bullet::GetBulletState()
+{
+	return m_bulletstate;
+}
 
 
 //State Functions
@@ -213,7 +216,7 @@ void Bullet::StateInFlight(float dt, sf::Vector2f position, sf::Vector2f directi
 		m_bulletDirection = m_moveDirection;
 
 		m_inFlight = false;
-		Bullet::LOADED;
+		m_bulletstate = Bullet::LOADED;
 	}
 }
 

@@ -18,8 +18,11 @@
 //Cannons - different types including machine guns, different turn speeds, hit points, different shot velocities
 //Bodies - different armour - different speeds and sizes, can take multiple cannons
 
-
-
+//AABB (Axis-Aligned Bounding Box Collision)
+//This math is easier to deal with (four conditional checks to determine collision)
+//Bullet or tank handles the check
+//Without SFML's function for intersect
+//The whitespace "is not" then something
 
 int main()
 {
@@ -159,6 +162,13 @@ int main()
 	
 	//List Test
 	std::list<Bullet*> listbullet;
+
+	for (int i = 0; i < 20; ++i)
+	{
+		Bullet* bullet = new Bullet();
+		listbullet.push_back(bullet);
+	}
+
 	//why isn't it this? sf::Sprite* sprite = new sf::Sprite(texture);
 
 	playerTank.EquipBulletList(listbullet, playerTank.GetPosition(), sprBullet);
@@ -359,9 +369,7 @@ int main()
 			convertTankPosition = playerTank.GetPosition();
 			//pbullet.Update(dt, convertTankPosition, playerTank.GetDirection());
 			
-			std::list<Bullet*>::iterator biter = listbullet.begin();
-
-			for (biter; biter != listbullet.end(); ++biter)
+			for (std::list<Bullet*>::iterator biter = listbullet.begin(); biter != listbullet.end(); ++biter)
 			{
 				(*biter)->Update(dt, playerTank.GetPosition(), playerTank.GetDirection());
 			}
@@ -399,7 +407,9 @@ int main()
 				//pbullet.SetPosition(sf::Vector2f(50, 50));
 			}
 
-			for (biter; biter != listbullet.end(); ++biter)
+			playerTank.Draw(&window);
+
+			for (std::list<Bullet*>::iterator biter = listbullet.begin(); biter != listbullet.end(); ++biter)
 			{
 				(*biter)->Draw(&window);
 				
@@ -415,7 +425,7 @@ int main()
 
 
 
-			playerTank.Draw(&window);
+			
 			//pbullet.Draw(&window);
 			//How to only draw the current bullet...
 
